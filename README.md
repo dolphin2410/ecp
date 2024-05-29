@@ -7,9 +7,9 @@ Electrolyte Conductivity Prediction
 ### 구현완료
 - 용액의 종류
 - 용액의 농도
+- 온도
 
 ### TODO
-- 온도
 - 감극제 사용여부
 - 구리판 간격
 - 구리판 면적

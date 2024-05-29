@@ -64,7 +64,16 @@ class DataSet:
 
         return (list_graph_solution_name, list_graph_x, list_graph_y)
     
+    def time_resistance_data(self, time_list) -> tuple[list[float], list[float]]:
+        return time_list, list(map(lambda x: self.pandas_data_2.iloc[1, 1:][f'time_{x}'], time_list))
+    
+    def time_resistance_data2(self, time_list) -> tuple[list[float], list[float]]:
+        return time_list, list(map(lambda x: self.pandas_data_2.iloc[3, 1:][f'time_{x}'], time_list))
+    
     def temperature_resistance_data(self, time_list) -> tuple[list[float], list[float]]:
         return list(map(lambda x: self.pandas_data_2.iloc[0, 1:][f'time_{x}'], time_list)), list(map(lambda x: self.pandas_data_2.iloc[1, 1:][f'time_{x}'], time_list))
+    
+    def temperature_resistance_data2(self, time_list) -> tuple[list[float], list[float]]:
+        return list(map(lambda x: self.pandas_data_2.iloc[2, 1:][f'time_{x}'], time_list)), list(map(lambda x: self.pandas_data_2.iloc[3, 1:][f'time_{x}'], time_list))
         
         

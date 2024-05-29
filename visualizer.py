@@ -53,8 +53,28 @@ def visualize_temperature_resistance(dataset: DataSet):
 
         # todo: a more intuitive naming
     list_temperature_x, list_current_y = dataset.temperature_resistance_data(time_range)
+    list_temperature_x2, list_current_y2 = dataset.temperature_resistance_data2(time_range)
 
     plt.plot(list_temperature_x, list(map(lambda mA: util.APPLIED_VOLTAGE / mA / 0.001, list_current_y)), marker="D")
+    plt.plot(list_temperature_x2, list(map(lambda mA: util.APPLIED_VOLTAGE / mA / 0.001, list_current_y2)), marker="D")
+
+    plt.show()
+
+def visualize_time_resistance(dataset: DataSet):
+    time_range = util.generate_time_range(46)
+
+    plt.xlabel("temperature [celcius]")
+    plt.ylabel("resistance [ohm]")
+    plt.title(f"R-T Graph, NaHCO3")
+
+        # todo: a more intuitive naming
+    list_time_x1, list_current_y1 = dataset.time_resistance_data(time_range)
+    list_time_x2, list_current_y2 = dataset.time_resistance_data2(time_range)
+
+    plt.plot(list_time_x1, list(map(lambda mA: util.APPLIED_VOLTAGE / mA / 0.001, list_current_y1)), marker="D")
+    plt.plot(list_time_x2, list(map(lambda mA: util.APPLIED_VOLTAGE / mA / 0.001, list_current_y2)), marker="D")
+
+    plt.legend(['with temperature change', 'without temperature change'])
 
     plt.show()
 

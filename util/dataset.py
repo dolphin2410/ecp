@@ -3,17 +3,19 @@ from .solution import Solution
 import math
 
 class DataSet:
-    def __init__(self, pandas_data: pd.DataFrame):
-        self.pandas_data = pandas_data
+    # todo: more intuitive naming
+    def __init__(self, pandas_data_1: pd.DataFrame, pandas_data_2: pd.DataFrame):
+        self.pandas_data_1 = pandas_data_1
+        self.pandas_data_2 = pandas_data_2
     
     def list_solutions(self) -> list[Solution]:
         list_solution = []
 
-        for solution_full_name in self.pandas_data.iloc[:, 0]:
+        for solution_full_name in self.pandas_data_1.iloc[:, 0]:
             solution_sliced = solution_full_name.split(" ")
             solution_concentration = float(solution_sliced[-1].split("g")[0])
             solution_name = " ".join(solution_sliced[:-1])
-            list_solution.append(Solution(self.pandas_data, solution_name, solution_concentration))
+            list_solution.append(Solution(self.pandas_data_1, solution_name, solution_concentration))
         
         return list_solution
     
@@ -41,7 +43,7 @@ class DataSet:
             graph_y: list[float] = [] # y axis = conductivity
 
             for solution in solution_group:
-                currentInMA = solution.get_conductivity_of(self.pandas_data, time)
+                currentInMA = solution.get_conductivity_of(time)
                 if math.isnan(currentInMA):
                     continue
                 graph_x.append(solution.concentration)
@@ -61,3 +63,8 @@ class DataSet:
             list_graph_solution_name.append(solution.solution_name)
 
         return (list_graph_solution_name, list_graph_x, list_graph_y)
+    
+    def temperature_resistance_data(self, time_list) -> tuple[list[float], list[float]]:
+        return list(map(lambda x: self.pandas_data_2.iloc[0, 1:][f'time_{x}'], time_list)), list(map(lambda x: self.pandas_data_2.iloc[1, 1:][f'time_{x}'], time_list))
+        
+        

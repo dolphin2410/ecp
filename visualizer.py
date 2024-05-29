@@ -17,7 +17,7 @@ def visualize_time_resistance(dataset: DataSet):
         legend_list = []
 
         for solution in solution_group:
-            conductivity_data = solution.get_conductivity_data(dataset.pandas_data)
+            conductivity_data = solution.get_conductivity_data()
             plt.plot(time_range, conductivity_data, marker="D")
             legend_list.append(solution.concentration)
         
@@ -43,3 +43,18 @@ def visualize_concentration_resistance(dataset: DataSet):
         plt.legend(list_solution_name)
 
     plt.show()
+
+def visualize_temperature_resistance(dataset: DataSet):
+    time_range = util.generate_time_range(46)
+
+    plt.xlabel("temperature [celcius]")
+    plt.ylabel("resistance [ohm]")
+    plt.title(f"R-T Graph, NaHCO3")
+
+        # todo: a more intuitive naming
+    list_temperature_x, list_current_y = dataset.temperature_resistance_data(time_range)
+
+    plt.plot(list_temperature_x, list(map(lambda mA: util.APPLIED_VOLTAGE / mA / 0.001, list_current_y)), marker="D")
+
+    plt.show()
+

@@ -6,4 +6,5 @@ import visualizer
 pandas_data = pd.read_csv("csvdataset.CSV")
 dataset = DataSet(pandas_data)
 
+visualizer.visualize_time_resistance(dataset)
 visualizer.visualize_concentration_resistance(dataset)

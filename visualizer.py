@@ -2,7 +2,7 @@ import util
 from matplotlib import pyplot as plt
 from util.dataset import DataSet
 
-def visualize_time_resistance(dataset: DataSet):
+def visualize_time_resistance_concentration(dataset: DataSet):
     time_range = util.generate_time_range(14)
 
     solution_group_map = dataset.group_solutions()
@@ -11,7 +11,7 @@ def visualize_time_resistance(dataset: DataSet):
         plt.figure(solution_index)
         plt.xlabel("time [s]")
         plt.ylabel("resistance [ohm]")
-        plt.title(f"R-T Graph, solution={solution_name}")
+        plt.title(f"Resistance-Time Graph, solution={solution_name}")
         solution_group = solution_group_map[solution_name]
 
         legend_list = []
@@ -33,11 +33,11 @@ def visualize_concentration_resistance(dataset: DataSet):
         plt.figure(time_index)
         plt.xlabel("mass of solute [g]")
         plt.ylabel("resistance [ohm]")
-        plt.title(f"R-C Graph, t={time}")
+        plt.title(f"Resistance-Concentration Graph, t={time}")
 
         list_solution_name, list_solution_x, list_solution_y = dataset.concentration_resistance_data(time)
         
-        for solution_index, solution_name in enumerate(list_solution_name):
+        for solution_index in range(len(list_solution_name)):
             plt.plot(list_solution_x[solution_index], list(map(lambda mA: util.APPLIED_VOLTAGE / mA / 0.001, list_solution_y[solution_index])), marker="D")
 
         plt.legend(list_solution_name)
@@ -45,36 +45,33 @@ def visualize_concentration_resistance(dataset: DataSet):
     plt.show()
 
 def visualize_temperature_resistance(dataset: DataSet):
-    time_range = util.generate_time_range(46)
-
-    plt.xlabel("temperature [celcius]")
+    plt.xlabel("temperature [°C]")
     plt.ylabel("resistance [ohm]")
-    plt.title(f"R-T Graph, NaHCO3")
+    plt.title(f"Resistance-Time Graph, NaHCO3")
 
         # todo: a more intuitive naming
-    list_temperature_x, list_current_y = dataset.temperature_resistance_data(time_range)
-    list_temperature_x2, list_current_y2 = dataset.temperature_resistance_data2(time_range)
+    list_names, list_time, list_temperature, list_resistance = dataset.temperature_resistance_data()
 
-    plt.plot(list_temperature_x, list(map(lambda mA: util.APPLIED_VOLTAGE / mA / 0.001, list_current_y)), marker="D")
-    plt.plot(list_temperature_x2, list(map(lambda mA: util.APPLIED_VOLTAGE / mA / 0.001, list_current_y2)), marker="D")
+    for temperature_data_index in range(len(list_names)):
+        plt.plot(list_temperature[temperature_data_index], list_resistance[temperature_data_index], marker="D")
+
+    plt.legend(list_names)
 
     plt.show()
 
-def visualize_time_resistance(dataset: DataSet):
-    time_range = util.generate_time_range(46)
 
-    plt.xlabel("temperature [celcius]")
+
+def visualize_time_resistance_temperature(dataset: DataSet):
+    plt.xlabel("time [s]")
     plt.ylabel("resistance [ohm]")
-    plt.title(f"R-T Graph, NaHCO3")
+    plt.title(f"Resistance-Time Graph, NaHCO3")
 
-        # todo: a more intuitive naming
-    list_time_x1, list_current_y1 = dataset.time_resistance_data(time_range)
-    list_time_x2, list_current_y2 = dataset.time_resistance_data2(time_range)
+    list_names, list_time, list_temperature, list_resistance = dataset.temperature_resistance_data()
 
-    plt.plot(list_time_x1, list(map(lambda mA: util.APPLIED_VOLTAGE / mA / 0.001, list_current_y1)), marker="D")
-    plt.plot(list_time_x2, list(map(lambda mA: util.APPLIED_VOLTAGE / mA / 0.001, list_current_y2)), marker="D")
+    for temperature_data_index in range(len(list_names)):
+        plt.plot(list_time[temperature_data_index], list_resistance[temperature_data_index], marker="D")
 
-    plt.legend(['with temperature change', 'without temperature change'])
+    plt.legend(list_names)
 
     plt.show()
 

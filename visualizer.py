@@ -47,7 +47,7 @@ def visualize_concentration_resistance(dataset: DataSet):
 def visualize_temperature_resistance(dataset: DataSet):
     plt.xlabel("temperature [°C]")
     plt.ylabel("resistance [ohm]")
-    plt.title(f"Resistance-Time Graph, NaHCO3")
+    plt.title(f"Resistance-Temperature Graph, NaHCO3")
 
         # todo: a more intuitive naming
     list_names, list_time, list_temperature, list_resistance = dataset.temperature_resistance_data()

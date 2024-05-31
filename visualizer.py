@@ -18,10 +18,11 @@ def visualize_time_resistance_concentration(dataset: DataSet):
 
         for solution in solution_group:
             conductivity_data = solution.get_conductivity_data()
-            plt.plot(time_range, conductivity_data, marker="D")
+            plt.plot(time_range, conductivity_data, marker="o", markersize=2)
             legend_list.append(solution.concentration)
         
         plt.legend(legend_list)
+        plt.ylim(bottom=0)
     plt.show()
 
 # Generate a list that has the time data [multiple of 5, 0 until 65]
@@ -38,9 +39,10 @@ def visualize_concentration_resistance(dataset: DataSet):
         list_solution_name, list_solution_x, list_solution_y = dataset.concentration_resistance_data(time)
         
         for solution_index in range(len(list_solution_name)):
-            plt.plot(list_solution_x[solution_index], list(map(lambda mA: util.APPLIED_VOLTAGE / mA / 0.001, list_solution_y[solution_index])), marker="D")
+            plt.plot(list_solution_x[solution_index], list(map(lambda mA: util.APPLIED_VOLTAGE / mA / 0.001, list_solution_y[solution_index])), marker="o", markersize=2)
 
         plt.legend(list_solution_name)
+        plt.ylim(bottom=0)
 
     plt.show()
 
@@ -53,9 +55,10 @@ def visualize_temperature_resistance(dataset: DataSet):
     list_names, list_time, list_temperature, list_resistance = dataset.temperature_resistance_data()
 
     for temperature_data_index in range(len(list_names)):
-        plt.plot(list_temperature[temperature_data_index], list_resistance[temperature_data_index], marker="D")
+        plt.plot(list_temperature[temperature_data_index], list_resistance[temperature_data_index], marker="o", markersize=2)
 
     plt.legend(list_names)
+    plt.ylim(bottom=0)
 
     plt.show()
 
@@ -69,9 +72,9 @@ def visualize_time_resistance_temperature(dataset: DataSet):
     list_names, list_time, list_temperature, list_resistance = dataset.temperature_resistance_data()
 
     for temperature_data_index in range(len(list_names)):
-        plt.plot(list_time[temperature_data_index], list_resistance[temperature_data_index], marker="D")
+        plt.plot(list_time[temperature_data_index], list_resistance[temperature_data_index], marker="o", markersize=2)
 
     plt.legend(list_names)
-
+    plt.ylim(bottom=0)
     plt.show()
 

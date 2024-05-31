@@ -20,15 +20,18 @@ dataset_distance_pole = DataSet(distance_pole_data, temperature_data)
 
 # visualizer.visualize_time_resistance_temperature(dataset_electrolyte)
 # visualizer.visualize_temperature_resistance(dataset_electrolyte)
+
 # visualizer.visualize_time_resistance_concentration(dataset_nonelectrolyte)
 # visualizer.visualize_concentration_resistance(dataset_nonelectrolyte)
-# visualizer.visualize_time_resistance_concentration(dataset_electrolyte)
-# visualizer.visualize_concentration_resistance(dataset_electrolyte)
+
+visualizer.visualize_time_resistance_concentration(dataset_electrolyte)
+visualizer.visualize_concentration_resistance(dataset_electrolyte)
+
 # visualizer.visualize_time_resistance_concentration(dataset_depolarizer)
 # visualizer.visualize_concentration_resistance(dataset_depolarizer)
 # visualizer.visualize_time_resistance_concentration(dataset_geometric)
 # visualizer.visualize_concentration_resistance(dataset_geometric)
 # visualizer.visualize_time_resistance_concentration(dataset_size_pole)
 # visualizer.visualize_concentration_resistance(dataset_size_pole)
-visualizer.visualize_time_resistance_concentration(dataset_distance_pole)
-visualizer.visualize_concentration_resistance(dataset_distance_pole)
+# visualizer.visualize_time_resistance_concentration(dataset_distance_pole)
+# visualizer.visualize_concentration_resistance(dataset_distance_pole)

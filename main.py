@@ -3,13 +3,13 @@ from util.dataset import DataSet
 import visualizer
 
 # Generate a dataset instance based on csv
-electrolyte_data = pd.read_csv("solution_concentration_dataset.CSV")
-temperature_data = pd.read_csv("temperature_dataset.CSV")
-nonelectrolute_data = pd.read_csv("nonelectrolyte_dataset.CSV")
-depolarizer_data = pd.read_csv("depolarized_dataset.CSV")
-geometric_data = pd.read_csv("geometric_shape_dataset.CSV")
-size_pole_data = pd.read_csv("size_pole_dataset.CSV")
-distance_pole_data = pd.read_csv("distance_pole_dataset.CSV")
+electrolyte_data = pd.read_csv("dataset/solution_concentration_dataset.CSV")
+temperature_data = pd.read_csv("dataset/temperature_dataset.CSV")
+nonelectrolute_data = pd.read_csv("dataset/nonelectrolyte_dataset.CSV")
+depolarizer_data = pd.read_csv("dataset/depolarized_dataset.CSV")
+geometric_data = pd.read_csv("dataset/geometric_shape_dataset.CSV")
+size_pole_data = pd.read_csv("dataset/size_pole_dataset.CSV")
+distance_pole_data = pd.read_csv("dataset/distance_pole_dataset.CSV")
 
 dataset_electrolyte = DataSet(electrolyte_data, temperature_data)
 dataset_nonelectrolyte = DataSet(nonelectrolute_data, temperature_data)

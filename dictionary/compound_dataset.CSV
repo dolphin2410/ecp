@@ -1,0 +1,8 @@
+compound_name,ions,ion_charge,ion_num,ion_mass,Ka
+copper sulfate,"Cu2+, SO42-","2, 2","1, 1","63.546, 96.063",
+sodium bicarbonate,"Na+, HCO3-","1, 1","1, 1","22.99, 61.017 ",
+sodium sulfate,"Na+, SO42-","1, 2","2, 1","22.99, 96.063",
+sodium nitrate,"Na+, NO3-","1, 1","1, 1","22.99, 62.0047",
+potassium sulfate,"K+, SO42-","1, 1","2, 1","39.098, 96.063",
+vinegar,"H+, CH3COO-","1, 1","1, 1","1.008, 59.044",1.80E-05
+citric acid,"H+, C6H5O73-","1, 3","3, 1","1.008, 189.1",7.40E-04

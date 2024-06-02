@@ -8,6 +8,14 @@ class DataSet:
     def __init__(self, solution_concentration_data: pd.DataFrame, temperature_data: pd.DataFrame):
         self.solution_concentration_data = solution_concentration_data
         self.temperature_data = temperature_data
+
+    def time_solutions_max(self) -> int:
+        list_times = []
+        
+        for solution in self.list_solutions():
+            list_times.append(solution.time_len)
+        
+        return max(list_times)
     
     def list_solutions(self) -> list[Solution]:
         list_solution = []

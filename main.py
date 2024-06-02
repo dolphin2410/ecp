@@ -1,6 +1,7 @@
 import pandas as pd
 from util.dataset import DataSet
 import visualizer
+import predictor
 
 # Generate a dataset instance based on csv
 electrolyte_data = pd.read_csv("dataset/solution_concentration_dataset.CSV")
@@ -18,14 +19,16 @@ dataset_geometric = DataSet(geometric_data, temperature_data)
 dataset_size_pole = DataSet(size_pole_data, temperature_data)
 dataset_distance_pole = DataSet(distance_pole_data, temperature_data)
 
+predictor.deep_learning_solutions(dataset_electrolyte, pd.read_csv("dictionary/compound_dataset.csv"))
+
 # visualizer.visualize_time_resistance_temperature(dataset_electrolyte)
 # visualizer.visualize_temperature_resistance(dataset_electrolyte)
 
 # visualizer.visualize_time_resistance_concentration(dataset_nonelectrolyte)
 # visualizer.visualize_concentration_resistance(dataset_nonelectrolyte)
 
-visualizer.visualize_time_resistance_concentration(dataset_electrolyte)
-visualizer.visualize_concentration_resistance(dataset_electrolyte)
+# visualizer.visualize_time_resistance_concentration(dataset_electrolyte)
+# visualizer.visualize_concentration_resistance(dataset_electrolyte)
 
 # visualizer.visualize_time_resistance_concentration(dataset_depolarizer)
 # visualizer.visualize_concentration_resistance(dataset_depolarizer)

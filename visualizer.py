@@ -3,7 +3,7 @@ from matplotlib import pyplot as plt
 from util.dataset import DataSet
 
 def visualize_time_resistance_concentration(dataset: DataSet):
-    time_range = util.generate_time_range(14)
+    time_range = util.generate_time_range(dataset.time_solutions_max())
 
     solution_group_map = dataset.group_solutions()
     
@@ -27,7 +27,7 @@ def visualize_time_resistance_concentration(dataset: DataSet):
 
 # Generate a list that has the time data [multiple of 5, 0 until 65]
 def visualize_concentration_resistance(dataset: DataSet):
-    time_range = util.generate_time_range(14)
+    time_range = util.generate_time_range(dataset.time_solutions_max())
     time_range.reverse()
 
     for time_index, time in enumerate(time_range):

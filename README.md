@@ -17,3 +17,5 @@ Electrolyte Conductivity Prediction
 - 구리판 면적
 - 여러 종류 이온
 
+### reference
+[Deep Learning Regression](https://github.com/bnsreenu/python_for_microscopists/blob/master/141-regression_housing_example.py)

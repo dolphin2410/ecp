@@ -62,8 +62,6 @@ def visualize_temperature_resistance(dataset: DataSet):
 
     plt.show()
 
-
-
 def visualize_time_resistance_temperature(dataset: DataSet):
     plt.xlabel("time [s]")
     plt.ylabel("resistance [ohm]")

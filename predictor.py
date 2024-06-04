@@ -27,16 +27,15 @@ def deep_learning_solutions(dataset_trainable: DataSet, dataset_dictionary: pd.D
     scaled_validation_x = scaler.transform(validation_x)
 
     model = Sequential()
-    model.add(Dense(128, input_dim=8, activation='relu'))
-    model.add(Dense(64, activation='relu'))
+    model.add(Dense(256, input_dim=8, activation='relu'))
+    model.add(Dense(2048, activation='relu'))
     model.add(Dense(1, activation='linear'))
 
     model.compile(loss='mean_squared_error', optimizer='adam', metrics=['mae'])
     model.summary()
 
-    history = model.fit(scaled_train_x, train_y, validation_split=0.2, epochs=500)
+    history = model.fit(scaled_train_x, train_y, validation_split=0.2, epochs=37) # 105.8564
 
-    
     training_loss = history.history['loss']
     validation_loss = history.history['val_loss']
     epochs = range(1, len(training_loss) + 1)
@@ -48,10 +47,3 @@ def deep_learning_solutions(dataset_trainable: DataSet, dataset_dictionary: pd.D
     plt.ylabel('Loss')
     plt.legend()
     plt.show()
-
-
-    
-
-
-
-

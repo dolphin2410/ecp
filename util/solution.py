@@ -6,15 +6,16 @@ class SolutionNotFound(Exception):
     pass
 
 class Solution:
-    def __init__(self, dataset: pd.DataFrame, solution_name: str, concentration: float):
+    def __init__(self, dataset: pd.DataFrame, solution_name: str, concentration: float, separator_unit: str):
         self.dataset = dataset
         self.solution_name = solution_name
         self.concentration = concentration
         self.time_len = len(self.dataset.iloc[0]) - 1
+        self.separator_unit = separator_unit
     
     def get_conductivity_of(self, time):
         """requires manual nan filtering"""
-        search_key = f'{self.solution_name} {self.concentration}g'
+        search_key = f'{self.solution_name} {self.concentration}{self.separator_unit}'
         time_key = f'time_{time}'
 
         if len(self.dataset[self.dataset['solution type'] == search_key]) == 0:

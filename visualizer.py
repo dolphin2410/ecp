@@ -1,6 +1,9 @@
 import util
 from matplotlib import pyplot as plt
 from util.dataset import DataSet
+import pandas as pd
+import math
+from util.compound_data import CompoundData
 
 def visualize_time_resistance_concentration(dataset: DataSet):
     time_range = util.generate_time_range(dataset.time_solutions_max())
@@ -8,8 +11,14 @@ def visualize_time_resistance_concentration(dataset: DataSet):
     solution_group_map = dataset.group_solutions()
     
     for solution_index, solution_name in enumerate(solution_group_map):
-        plt.figure(solution_index)
-        plt.xlabel("time [s]")
+        if solution_index % 4 == 0:
+            plt.figure(solution_index // 4)
+
+        subplot_index = 4 if (solution_index + 1) % 4 == 0 else (solution_index + 1) % 4
+
+        plt.subplot(2, 2, subplot_index)
+
+        plt.xlabel(f"time [s]\n({chr(97 + solution_index)})")
         plt.ylabel("resistance [ohm]")
         plt.title(f"Resistance-Time Graph, solution={solution_name}")
         solution_group = solution_group_map[solution_name]
@@ -18,12 +27,57 @@ def visualize_time_resistance_concentration(dataset: DataSet):
 
         for solution in solution_group:
             conductivity_data = solution.get_conductivity_data()
-            plt.plot(time_range, conductivity_data, marker="o", markersize=2)
+            resistance_data = list(map(util.mAToOhm, conductivity_data))
+            plt.plot(time_range, resistance_data, marker="o", markersize=2)
             legend_list.append(solution.concentration)
         
-        plt.legend(legend_list)
-        plt.ylim(bottom=0)
+        plt.legend(legend_list, prop={'size': 8})
+        plt.ylim(bottom=0, top=100)
+        plt.xlim(right=80)
+
+        plt.subplots_adjust(hspace=0.5)
     plt.show()
+
+def visualize_temp(dataset_trainable: DataSet, dataset_dictionary: pd.DataFrame):
+    plt.xlabel("temp")
+    plt.ylabel("resistance [ohm]")
+
+    solution_groups = dataset_trainable.group_solutions()
+
+    list_solution_name = []
+    for solution_name in solution_groups:
+        print(solution_name)
+        compound_data = CompoundData(dataset_dictionary, solution_name)
+        
+        list_solution_name.append(solution_name)
+
+        list_x = []
+        list_y = []
+        for solution in solution_groups[solution_name]:
+            IMC = compound_data.get_ionization_concentration(compound_data.from_grams_to_molar_conductivity(solution.concentration))
+            CHARGE = compound_data.get_ion_charge()
+            MASS = compound_data.get_ion_mass()
+            list_x.append(IMC[0] * IMC[1])
+            list_y.append(solution.get_averaged_conductivity())
+        print(IMC[0] * IMC[1])
+        plt.plot(list_x, list_y)
+
+        # print("CONDUCTIVITY = ", end="")
+        # print(solution_groups[solution_name][0].get_conductivity_of(0))
+        # print("ION_NUM = ", end="")
+        # print(compound_data.get_ion_num())
+        # print("ION_CHARGE = ", end="")
+        # print(compound_data.get_ion_charge())
+        # print("ION_MASS = ", end="")
+        # print(compound_data.get_ion_mass())
+        # print("IONIZATION_MOLAR_CONCENTRATION = ", end="")
+        # print(IMC)
+        # print("--------")
+
+    plt.legend(list_solution_name)
+    plt.ylim(bottom=0)
+    plt.show()
+
 
 # Generate a list that has the time data [multiple of 5, 0 until 65]
 def visualize_concentration_resistance(dataset: DataSet):

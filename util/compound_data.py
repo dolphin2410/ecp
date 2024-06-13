@@ -1,5 +1,4 @@
 import pandas as pd
-import util
 import math
 
 class CompoundDataNotFound(Exception):
@@ -30,16 +29,16 @@ class CompoundData:
     
     def get_ion_charge(self) -> list[int]:
         raw = str(self.get_data_of("ion_charge")).split(", ")
-        return map(int, raw)
+        return list(map(int, raw))
     
     def get_ion_num(self) -> list[int]:
         raw = str(self.get_data_of("ion_num")).split(", ")
-        return map(int, raw)
+        return list(map(int, raw))
     
     def get_ion_mass(self) -> list[float]:
         raw = str(self.get_data_of("ion_mass")).split(", ")
-        return map(float, raw)
-    
+        return list(map(float, raw))
+
     def get_ionization_concentration(self, initial_molar_concentration) -> list[float]:
         equilibrium_constant = float(self.get_data_of("Ka"))
         m, n = tuple(self.get_ion_num())

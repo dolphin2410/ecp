@@ -20,7 +20,7 @@ def deep_learning_solutions(dataset_trainable: DataSet, dataset_dictionary: pd.D
         output_data_list.append(output_data_fragment)
 
     train_x, validation_x, train_y, validation_y = train_test_split(np.array(input_data_list), np.array(output_data_list), test_size=0.2, shuffle=True, random_state=34)
-    scaler=StandardScaler()
+    scaler = StandardScaler()
     scaler.fit(train_x)
 
     scaled_train_x = scaler.transform(train_x)
@@ -28,13 +28,19 @@ def deep_learning_solutions(dataset_trainable: DataSet, dataset_dictionary: pd.D
 
     model = Sequential()
     model.add(Dense(256, input_dim=8, activation='relu'))
-    model.add(Dense(2048, activation='relu'))
+    model.add(Dense(64, activation='relu'))
     model.add(Dense(1, activation='linear'))
 
     model.compile(loss='mean_squared_error', optimizer='adam', metrics=['mae'])
     model.summary()
 
-    history = model.fit(scaled_train_x, train_y, validation_split=0.2, epochs=37) # 105.8564
+    history = model.fit(scaled_train_x, train_y, validation_split=0.2, epochs=359) # 105.8564
+
+    print("Prediction, Actual")
+    prediction_actual = list(zip(model.predict(scaled_train_x).reshape(1, -1).tolist()[0], list(train_y)))
+    print(prediction_actual)
+    print("\nMax Offset")
+    print(max(map(lambda x: abs(x[0] - x[1]), prediction_actual)))
 
     training_loss = history.history['loss']
     validation_loss = history.history['val_loss']

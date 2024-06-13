@@ -4,10 +4,16 @@ from .temperature import TemperatureData
 import math
 
 class DataSet:
+
     # todo: more intuitive naming
     def __init__(self, solution_concentration_data: pd.DataFrame, temperature_data: pd.DataFrame):
         self.solution_concentration_data = solution_concentration_data
         self.temperature_data = temperature_data
+        self.separator_unit = "g"
+
+
+    def set_separator_unit(self, new_separator_unit):
+        self.separator_unit = new_separator_unit
 
     def time_solutions_max(self) -> int:
         list_times = []
@@ -22,9 +28,9 @@ class DataSet:
 
         for solution_full_name in self.solution_concentration_data.iloc[:, 0]:
             solution_sliced = solution_full_name.split(" ")
-            solution_concentration = float(solution_sliced[-1].split("g")[0])
+            solution_concentration = float(solution_sliced[-1].split(self.separator_unit)[0])
             solution_name = " ".join(solution_sliced[:-1])
-            list_solution.append(Solution(self.solution_concentration_data, solution_name, solution_concentration))
+            list_solution.append(Solution(self.solution_concentration_data, solution_name, solution_concentration, self.separator_unit))
         
         return list_solution
     

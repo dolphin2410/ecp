@@ -106,6 +106,4 @@ class DataSet:
             temperature_list_list.append(temperature_values)
             resistance_list_list.append(list(map(lambda x: 5 / 0.001 / x, current_values)))
 
-        return temperature_data_names, time_list_list, temperature_list_list, resistance_list_list
-        
-        
+        return temperature_data_names, time_list_list, temperature_list_list, resistance_list_list    

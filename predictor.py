@@ -4,6 +4,7 @@ from util.compound_data import CompoundData
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 import numpy as np
+import util
 from matplotlib import pyplot as plt
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
@@ -17,7 +18,7 @@ def deep_learning_solutions(dataset_trainable: DataSet, dataset_dictionary: pd.D
         input_data_fragment = compound_data.get_data(compound_data.from_grams_to_molar_conductivity(solution.concentration))
         output_data_fragment = solution.get_averaged_conductivity()
         input_data_list.append(input_data_fragment)
-        output_data_list.append(output_data_fragment)
+        output_data_list.append(util.mAToOhm(output_data_fragment))
 
     train_x, validation_x, train_y, validation_y = train_test_split(np.array(input_data_list), np.array(output_data_list), test_size=0.2, shuffle=True, random_state=34)
     scaler = StandardScaler()
@@ -34,13 +35,19 @@ def deep_learning_solutions(dataset_trainable: DataSet, dataset_dictionary: pd.D
     model.compile(loss='mean_squared_error', optimizer='adam', metrics=['mae'])
     model.summary()
 
-    history = model.fit(scaled_train_x, train_y, validation_split=0.2, epochs=359) # 105.8564
+    history = model.fit(scaled_train_x, train_y, validation_split=0.2, epochs=1000) # 105.8564
 
-    print("Prediction, Actual")
-    prediction_actual = list(zip(model.predict(scaled_train_x).reshape(1, -1).tolist()[0], list(train_y)))
-    print(prediction_actual)
+    print("Prediction, Actual, Offset")
+    prediction_actual_offset = list(zip(model.predict(scaled_train_x).reshape(1, -1).tolist()[0], list(train_y)))
+    prediction_actual_offset = list(zip(model.predict(scaled_train_x).reshape(1, -1).tolist()[0], list(train_y), list(map(lambda x: abs(x[0] - x[1]), prediction_actual_offset))))
+
+    print(prediction_actual_offset)
     print("\nMax Offset")
-    print(max(map(lambda x: abs(x[0] - x[1]), prediction_actual)))
+    
+    print(max(map(lambda x: abs(x[0] - x[1]), prediction_actual_offset)))
+
+
+    pd.DataFrame(prediction_actual_offset).to_excel(excel_writer="./main.xlsx")
 
     training_loss = history.history['loss']
     validation_loss = history.history['val_loss']

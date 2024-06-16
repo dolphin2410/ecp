@@ -8,9 +8,13 @@ class CompoundData:
     def __init__(self, dataset: pd.DataFrame, solution_name: str):
         self.dataset = dataset
         self.solution_name = solution_name
+        self.ions = self.get_ions()
+        self.ion_charge = self.get_ion_charge()
+        self.ion_num = self.get_ion_num()
+        self.ion_mass = self.get_ion_mass()
 
     def from_grams_to_molar_conductivity(self, grams: float) -> float:
-        molar_mass = sum(self.get_ion_mass())
+        molar_mass = sum(self.ion_mass)
         volume = 0.05 # in liters
         return grams / molar_mass / volume
     
@@ -41,7 +45,7 @@ class CompoundData:
 
     def get_ionization_concentration(self, initial_molar_concentration) -> list[float]:
         equilibrium_constant = float(self.get_data_of("Ka"))
-        m, n = tuple(self.get_ion_num())
+        m, n = tuple(self.ion_num)
 
         if math.isnan(equilibrium_constant):
             return [m * initial_molar_concentration, n * initial_molar_concentration]
@@ -50,9 +54,9 @@ class CompoundData:
             return [m * y, n * y]
         
     def get_data(self, initial_molar_concentration: float):
-        cation_charge, anion_charge = tuple(self.get_ion_charge())
-        cation_num, anion_num = tuple(self.get_ion_num())
-        cation_mass, anion_mass = tuple(self.get_ion_mass())
+        cation_charge, anion_charge = tuple(self.ion_charge)
+        cation_num, anion_num = tuple(self.ion_num)
+        cation_mass, anion_mass = tuple(self.ion_mass)
         cation_concentration, anion_concentration = tuple(self.get_ionization_concentration(initial_molar_concentration))
-        return [cation_charge, anion_charge, cation_num, anion_num, cation_mass, anion_mass, cation_concentration, anion_concentration]
+        return [cation_charge, cation_num, cation_mass, cation_concentration]
     

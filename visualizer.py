@@ -39,8 +39,8 @@ def visualize_time_resistance_concentration(dataset: DataSet):
     plt.show()
 
 def visualize_temp(dataset_trainable: DataSet, dataset_dictionary: pd.DataFrame):
-    plt.xlabel("temp")
-    plt.ylabel("resistance [ohm]")
+    plt.xlabel("solution constant")
+    plt.ylabel("current [mA]")
 
     solution_groups = dataset_trainable.group_solutions()
 
@@ -57,7 +57,7 @@ def visualize_temp(dataset_trainable: DataSet, dataset_dictionary: pd.DataFrame)
             IMC = compound_data.get_ionization_concentration(compound_data.from_grams_to_molar_conductivity(solution.concentration))
             CHARGE = compound_data.get_ion_charge()
             MASS = compound_data.get_ion_mass()
-            list_x.append(IMC[0] * IMC[1])
+            list_x.append(IMC[0] * math.sqrt(CHARGE[0] / MASS[0]))
             list_y.append(solution.get_averaged_conductivity())
         print(IMC[0] * IMC[1])
         plt.plot(list_x, list_y)
